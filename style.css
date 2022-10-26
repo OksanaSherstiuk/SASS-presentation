@@ -69,3 +69,6 @@ ol,
 ul {
   padding-left: 4rem;
 }
+span {
+  color: var(--primary);
+}
