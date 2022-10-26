@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>SASS Presentation</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="#what">What is SASS?</a>
+        <a href="#why">Why we use SASS?</a>
+        <a href="#structure">Structure of SASS Project</a>
+        <a href="#init">Initializing SASS</a>
+        <a href="#features">Features of SASS</a>
+        <a href="#resources">Resources</a>
+      </nav>
+    </header>
+
+    <main>
+      <h1>SASS</h1>
+
+      <h2 id="what">What is SASS</h2>
+      <p>
+        Sass is a preprocessor scripting language that is interpreted or
+        compiled into Cascading Style Sheets.Which means that, it allows us to
+        use variables, nested rules, mixins, functions, and more, all with a
+        fully CSS-compatible syntax.
+      </p>
+      <h2 id="why">Why we use SASS?</h2>
+      <p>
+        As stylesheets are getting larger, more complex, and harder to maintain.
+        This is where a SASS pre-processor can help. SASS lets you use features
+        that do not exist in CSS, like variables, nested rules, mixins, imports,
+        built-in functions, and other stuff.
+      </p>
+      <h2 id="structure">Structure of SASS Project</h2>
+      <p>
+        Project structure must contain folder named <span>src</span> (the
+        source). In the <span>src</span> folder we have all the files and
+        folders in which we will work: index.html, style.scss, assets folder
+        etc.
+      </p>
+      <h2 id="init">Initializing SASS</h2>
+      <ol>
+        <li>
+          First thing we need is to install node (if you don't have it). To
+          check the node installation you need to type
+          <span>node --version</span> in the terminal and you will see what
+          version do you have or if you haven't node installed. If you don't
+          have node installed on your computer you have to install it from
+          <a href="https://nodejs.org/en/">here</a> and after installation type
+          in the terminal <span>node --version</span> to check it out.
+        </li>
+        <li>
+          We need to Initialize the project by using <span> npm init </span> in
+          the folder of your project. This command will create a
+          <span>package.json</span> file which includes information about the
+          project like dependencies we are using and scripts we will run. You
+          also can use <span> npm init -y</span> for default setup.
+        </li>
+        <li>
+          You have to add the following scripts in the
+          <span> package.json</span> file. So we can run them later to use SASS
+          and see the output and create a public folder.
+          <br />
+          <br />
+          <pre>
+        "scripts": {
+            "build:sass": "sass  --no-source-map src/sass:public/css",
+            "copy:html": "copyfiles -u 1 ./src/*.html public",
+            "copy": "npm-run-all --parallel copy:*",
+            "watch:html": "onchange 'src/*.html' -- npm run copy:html",
+            "watch:sass": "sass  --no-source-map --watch src/sass:public/css",
+            "watch": "npm-run-all --parallel watch:*",
+            "serve": "browser-sync start --server public --files public",
+            "start": "npm-run-all copy --parallel watch serve",
+            "build": "npm-run-all copy:html build:*",
+            "postbuild": "postcss public/css/*.css -u autoprefixer cssnano -r --no-map"
+          },
+            </pre
+          >
+        </li>
+        <li>
+          We need these dependencies so the SASS can work properly.
+          <br />
+          <br />
+          <pre>
+            "dependencies": {
+                "autoprefixer": "^10.4.2",
+                "browser-sync": "^2.27.7",
+                "copyfiles": "^2.4.1",
+                "cssnano": "^5.0.17",
+                "npm-run-all": "^4.1.5",
+                "onchange": "^7.1.0",
+                "postcss-cli": "^9.1.0",
+                "sass": "^1.49.8"
+              }
+            </pre
+          >
+        </li>
+      </ol>
+      <h2 id="features">Features of SASS</h2>
+      <ul>
+        <li>
+          <h3>Variables and Maps</h3>
+
+          Variables are used to store information to be referenced and
+          manipulated later. For example, you can use it for colors, font sizes,
+          screen sizes and many other things. We can declare a variable like
+          this:
+          <br />
+          <br />
+          <pre>
+            $primary-color: grey;
+            $secondary-color: orange;
+        </pre
+          >
+          <pre>
+            h1{
+              color: $primary-color;
+            }
+          </pre>
+
+          <h4>Maps</h4>
+          Also we can use Maps for storing the information in pairs of keys and
+          values, and make it easy to look up a value by its corresponding key
+          <br />
+          <br />
+          <pre>
+            $colors(
+                  "primary-color": gray,
+                  "secondary-color": orange
+                   )
+          </pre>
+        </li>
+        <li>
+          <h3>Nesting</h3>
+          Nesting is a shortcut to create CSS rules for multiple selectors for a
+          specific property. So, instead of rewriting the same set of properties
+          for the different selectors, we can simply nest selectors inside other
+          selectors.
+          <br />
+          <br />
+          <pre>
+            #sidebar {
+              position: fixed;
+              height: 100%;
+      
+              ul {
+                  list-style-type: none;
+                  padding: 0;
+      
+                  li {
+                      background-color: $primary-color;
+                      color: $secondary-color;
+                  }
+                }
+              } 
+          </pre>
+        </li>
+        <li>
+          <h3>Mixins</h3>
+          Mixins allow you to define styles that can be re-used throughout your
+          stylesheet.
+          <br />
+          <br />
+          <pre>
+            @mixin list-style {
+              margin: 0.5rem;
+              padding: 1rem;
+              list-style: none;
+            }
+          </pre>
+          <pre>
+            nav ul {
+              @include list-style;
+            }
+          </pre>
+        </li>
+      </ul>
+
+      <h2 id="resources">Resources</h2>
+      <ul>
+        <li>
+          <a href="https://nodejs.org/en/">Node.js </a> is an open-source,
+          cross-platform JavaScript runtime environment
+        </li>
+        <li>
+          <a href="https://docs.npmjs.com/">npm Docs</a> Documentation for the
+          npm registry, website, and command-line interface
+        </li>
+        <li>
+          <a href="https://sass-lang.com/">SASS</a> is the most mature, stable,
+          and powerful professional grade CSS extension language in the world.
+        </li>
+      </ul>
+    </main>
+    <aside></aside>
+  </body>
+</html>
